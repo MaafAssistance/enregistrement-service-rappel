@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAAF ASSISTANCE | Ne plus jamais oublier l'essentiel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .primary-blue { background-color: #0056b3; }
+        .text-primary-blue { color: #0056b3; }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+
+        .call-float {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- NAVIGATION -->
+    <nav class="primary-blue fixed w-full z-50 top-0 left-0 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-white font-bold text-xl tracking-wider">MAAF ASSISTANCE</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" onclick="showSection('hero')" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Accueil</a>
+                        <a href="#" onclick="showSection('form-section')" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Enregistrer un rappel</a>
+                        <a href="#" onclick="showSection('blog-section')" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Blogs & Publicités</a>
+                        <a href="#footer" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-white p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-blue-800 px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="#" onclick="showSection('hero')" class="text-white block px-3 py-2 rounded-md text-base font-medium">Accueil</a>
+            <a href="#" onclick="showSection('form-section')" class="text-white block px-3 py-2 rounded-md text-base font-medium">Enregistrer un rappel</a>
+            <a href="#" onclick="showSection('blog-section')" class="text-white block px-3 py-2 rounded-md text-base font-medium">Blogs & Publicités</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="mt-16">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-primary-blue leading-tight mb-4">
+                        Votre partenaire de confiance pour ne plus jamais oublier l'essentiel.
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Programmez vos rappels importants (santé, factures, réunions) et recevez des notifications en temps réel pour une vie mieux organisée.
+                    </p>
+                    <button onclick="showSection('form-section')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                        Démarrer maintenant
+                    </button>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80" alt="Assistance" class="rounded-2xl shadow-2xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- FORM SECTION -->
+        <section id="form-section" class="section-hidden py-16 bg-gray-100">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="primary-blue p-6 text-center text-white">
+                        <h2 class="text-2xl font-bold">Programmer votre rappel</h2>
+                        <p class="text-blue-100">Remplissez les informations ci-dessous</p>
+                    </div>
+                    
+                    <form id="rappelForm" class="p-8 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Nom -->
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Nom complet *</label>
+                                <input type="text" id="nom" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Ex: Jean Dupont">
+                            </div>
+                            <!-- WhatsApp -->
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Numéro WhatsApp *</label>
+                                <input type="tel" id="whatsapp" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="+229XXXXXXXX">
+                            </div>
+                            <!-- Type -->
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Type de rappel *</label>
+                                <select id="typeRappel" required onchange="updatePrice()" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="Réunion d'affaire">Réunion d'affaire (500 FCFA)</option>
+                                    <option value="Entretien professionnel">Entretien professionnel (500 FCFA)</option>
+                                    <option value="Factures">Factures (500 FCFA)</option>
+                                    <option value="Formation/Cours">Formation/Cours (500 FCFA)</option>
+                                    <option value="Composition/Examen">Composition/Examen (200 FCFA)</option>
+                                    <option value="Versement">Versement (500 FCFA)</option>
+                                    <option value="Achat/Vente">Achat/Vente (500 FCFA)</option>
+                                    <option value="Réception/Livraison">Réception/Livraison (300 FCFA)</option>
+                                    <option value="Anniversaire/Cérémonie">Anniversaire/Cérémonie (200 FCFA)</option>
+                                    <option value="Rendez-vous CNSS">Rendez-vous CNSS (500 FCFA)</option>
+                                    <option value="Rendez-vous médical">Rendez-vous médical (300 FCFA)</option>
+                                </select>
+                            </div>
+                            <!-- Montant (Auto) -->
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Montant à payer (FCFA)</label>
+                                <input type="text" id="montant" readonly class="w-full px-4 py-3 bg-gray-100 border rounded-lg outline-none font-bold text-blue-600">
+                            </div>
+                            <!-- Date & Heure -->
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Date et Heure *</label>
+                                <input type="datetime-local" id="dateHeure" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
+                            </div>
+                            <!-- Lieu -->
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Lieu *</label>
+                                <input type="text" id="lieu" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Ville ou adresse">
+                            </div>
+                        </div>
+
+                        <!-- Détails -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Informations ou détails *</label>
+                            <textarea id="details" required rows="3" class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Précisez les détails de votre rappel...ex:Apporter les documents..."></textarea>
+                        </div>
+
+                        <!-- Proche -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Numéro WhatsApp d’un proche *</label>
+                            <input type="tel" id="whatsappProche" required class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="+229XXXXXXXX">
+                        </div>
+
+                        <!-- CGU -->
+                        <div class="flex items-start space-x-3">
+                            <input type="checkbox" id="cgu" required class="mt-1 w-5 h-5 rounded text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label for="cgu" class="text-sm text-gray-600">
+                                Je confirme l'exactitude des informations ci-dessus et j'accepte les <a href="cgu.html" class="text-blue-600 underline">Conditions Générales d'Utilisation (CGU)</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition duration-300">
+                            Je valide mon rappel
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECAP SECTION -->
+        <section id="recap-section" class="section-hidden py-16 bg-white">
+            <div class="max-w-lg mx-auto px-4">
+                <div class="border-2 border-green-500 rounded-2xl p-8 space-y-6">
+                    <h2 class="text-2xl font-bold text-center text-green-600">Récapitulatif de votre demande</h2>
+                    <div id="recap-content" class="space-y-4">
+                        <!-- Rempli en JS -->
+                    </div>
+                    <button onclick="processToPayment()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition duration-300 flex items-center justify-center">
+                        Suivant <i class="fas fa-chevron-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG & PUBS -->
+        <section id="blog-section" class="section-hidden py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl font-extrabold text-center mb-12 text-primary-blue">Actualités & Conseils</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Blog 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+                        <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=500&q=60" class="h-48 w-full object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-3">5 conseils pour ne plus oublier vos factures</h3>
+                            <p class="text-gray-600 text-sm mb-4">L'organisation financière commence par une bonne gestion des échéances.</p>
+                            <button class="text-blue-600 font-bold hover:underline">Lire plus</button>
+                        </div>
+                    </div>
+                    <!-- Pub/Vidéo -->
+                    <div class="bg-blue-900 rounded-xl overflow-hidden shadow-lg flex flex-col items-center justify-center p-6 text-white text-center">
+                        <i class="fas fa-play-circle text-6xl mb-4 text-blue-400"></i>
+                        <h3 class="font-bold text-xl mb-3">Vidéo : Comment ça marche ?</h3>
+                        <p class="text-blue-200 text-sm mb-6">Découvrez en 1 minute comment MAAF Assistance vous simplifie la vie.</p>
+                        <button class="bg-white text-blue-900 px-6 py-2 rounded-full font-bold">Regarder</button>
+                    </div>
+                    <!-- Blog 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500&q=60" class="h-48 w-full object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-3">La santé : l'importance des rappels médicaux</h3>
+                            <p class="text-gray-600 text-sm mb-4">Pourquoi ne jamais rater un contrôle chez votre médecin traitant.</p>
+                            <button class="text-blue-600 font-bold hover:underline">Lire plus</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer" class="mt-20">
+        <!-- Section Aide (White) -->
+        <div class="max-w-4xl mx-auto px-4 -mb-10 relative z-10">
+            <div class="bg-white rounded-2xl shadow-xl p-8 border border-blue-100 flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-2xl font-bold text-primary-blue mb-2">Besoin d’aide ?</h3>
+                    <p class="text-gray-600">Notre équipe support est disponible pour vous accompagner.</p>
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="flex items-center justify-center md:justify-start text-gray-700 mb-2">
+                        <i class="fas fa-envelope mr-3 text-blue-600"></i> maafassistance6@gmail.com
+                    </p>
+                    <p class="flex items-center justify-center md:justify-start text-gray-700">
+                        <i class="fas fa-map-marker-alt mr-3 text-blue-600"></i> Abomey-Calavi, Bénin
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Footer (Blue) -->
+        <div class="primary-blue pt-24 pb-8 text-white">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+                <!-- Info -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-4">MAAF ASSISTANCE</h2>
+                    <p class="text-blue-100 italic">"Votre partenaire de confiance pour ne plus jamais oublier l'essentiel."</p>
+                </div>
+                <!-- Liens -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 border-b border-blue-400 pb-2 inline-block">Liens utiles</h3>
+                    <ul class="space-y-2 text-blue-100">
+                        <li><a href="#" class="hover:text-white">Mentions légales</a></li>
+                        <li><a href="#" class="hover:text-white">Confidentialité</a></li>
+                        <li><a href="cgu.html" class="hover:text-white">CGU</a></li>
+                    </ul>
+                </div>
+                <!-- Social -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 border-b border-blue-400 pb-2 inline-block">Suivez-nous</h3>
+                    <div class="flex justify-center md:justify-start space-x-6">
+                        <a href="#" class="text-2xl hover:text-blue-400 transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-blue-700 mt-12 pt-8 text-center text-blue-200 text-sm">
+                &copy; 2026 MAAF ASSISTANCE - Tous droits réservés
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Buttons -->
+    <a href="https://wa.me/2290143897606" class="whatsapp-float bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-2xl">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="tel:+2290143897606" class="call-float bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-2xl">
+        <i class="fas fa-phone"></i>
+    </a>
+
+    <!-- SCRIPTS -->
+    <script>
+        const PRICES = {
+            "Réunion d'affaire": 500,
+            "Entretien professionnel": 500,
+            "Factures": 500,
+            "Formation/Cours": 500,
+            "Composition/Examen": 200,
+            "Versement": 500,
+            "Achat/Vente": 500,
+            "Réception/Livraison": 300,
+            "Anniversaire/Cérémonie": 200,
+            "Rendez-vous CNSS": 500,
+            "Rendez-vous médical": 300
+        };
+
+        // Variable globale pour stocker les données temporaires
+        let currentData = {};
+
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('section-hidden'));
+            document.getElementById(id).classList.remove('section-hidden');
+            document.getElementById('mobile-menu').classList.add('hidden');
+            window.scrollTo(0,0);
+        }
+
+        function updatePrice() {
+            const type = document.getElementById('typeRappel').value;
+            const price = PRICES[type] || 0;
+            document.getElementById('montant').value = price ? price : "";
+        }
+
+        // Validation WhatsApp Format (+229XXXXXXXX)
+        function validateWhatsApp(num) {
+            const regex = /^\+[0-9]{8,15}$/;
+            return regex.test(num.trim());
+        }
+
+        // Générer ID Unique
+        function generateId() {
+            const year = new Date().getFullYear();
+            const rand = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+            return `MAAF-${year}-${rand}`;
+        }
+
+        // Soumission du formulaire
+        document.getElementById('rappelForm').onsubmit = function(e) {
+            e.preventDefault();
+
+            const wa = document.getElementById('whatsapp').value;
+            const waProche = document.getElementById('whatsappProche').value;
+
+            if (!validateWhatsApp(wa) || !validateWhatsApp(waProche)) {
+                alert("Veuillez entrer les numéros WhatsApp au format international (ex: +229XXXXXXXX)");
+                return;
+            }
+
+            const id = generateId();
+            currentData = {
+                id: id,
+                nom: document.getElementById('nom').value,
+                whatsapp: wa,
+                type: document.getElementById('typeRappel').value,
+                montant: document.getElementById('montant').value,
+                dateHeure: document.getElementById('dateHeure').value,
+                lieu: document.getElementById('lieu').value,
+                details: document.getElementById('details').value,
+                whatsappProche: waProche
+            };
+
+            // Afficher Recap
+            const recapHtml = `
+                <div class="bg-gray-50 p-4 rounded-lg space-y-2 text-sm md:text-base">
+                    <p><strong>ID Unique:</strong> ${currentData.id}</p>
+                    <p><strong>Nom:</strong> ${currentData.nom}</p>
+                    <p><strong>Type:</strong> ${currentData.type}</p>
+                    <p><strong>Date & Heure:</strong> ${currentData.dateHeure.replace('T', ' ')}</p>
+                    <p><strong>Lieu:</strong> ${currentData.lieu}</p>
+                    <p><strong>WhatsApp:</strong> ${currentData.whatsapp}</p>
+                    <p class="text-lg font-bold text-blue-600 mt-4 border-t pt-2">Total à payer: ${currentData.montant} FCFA</p>
+                </div>
+            `;
+            document.getElementById('recap-content').innerHTML = recapHtml;
+            showSection('recap-section');
+        };
+
+        // FEDAPAY INTEGRATION FIX
+        function processToPayment() {
+            // Vérification si le SDK est chargé
+            if (typeof FedaPay === 'undefined' || !FedaPay.checkout) {
+                alert("Le service de paiement est encore en cours de chargement. Veuillez patienter un instant ou rafraîchir la page.");
+                return;
+            }
+
+            try {
+                FedaPay.init('#pay-button', {
+            public_key: 'pk_live_NCxIYcDccM9djeDCt9e0wZ_K', // <--- REMPLACEZ PAR VOTRE CLÉ PK_SANDBOX FEDAPAY
+                    transaction: {
+                        amount: parseInt(currentData.montant),
+                        description: `Programmation rappel ${currentData.type} - ID: ${currentData.id}`
+                    },
+                    customer: {
+                        firstname: currentData.nom.split(' ')[0],
+                        lastname: currentData.nom.split(' ')[1] || 'Client',
+                        email: 'maafassistance6@gmail.com',
+                        phone_number: {
+                            number: currentData.whatsapp.replace('+', ''),
+                            country: 'bj'
+                        }
+                    },
+                    onComplete: function(response) {
+                        if (response.status === 'approved') {
+                            saveToGoogleSheets(currentData);
+                            finalizeProcess();
+                        } else {
+                            alert("Le paiement n'a pas pu être validé.");
+                        }
+                    }
+                });
+
+                checkout.open();
+            } catch (error) {
+                console.error("Erreur FedaPay:", error);
+                alert("Une erreur est survenue lors de l'initialisation du paiement.");
+            }
+        }
+
+        // Simulation sauvegarde Google Sheets (via Fetch vers un script URL)
+        function saveToGoogleSheets(data) {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzE7MSTowO3flqimggcvZrUoArF_jnQy-meR5eij8KSTkEfaFmBkd3KbGveMt_S5d6e/exec';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).catch(e => console.log("Erreur enregistrement Sheets"));
+        }
+
+        function finalizeProcess() {
+            const msg = `Bonjour, je suis ${currentData.nom}, je confirme le paiement de ${currentData.montant} FCFA pour mon rappel de type ${currentData.type}. ID Dossier: ${currentData.id}. Merci.`;
+            const encodedMsg = encodeURIComponent(msg);
+            const waUrl = `https://wa.me/2290143897606?text=${encodedMsg}`;
+            
+            alert("Paiement réussi ! Redirection vers WhatsApp pour validation finale...");
+            window.location.href = waUrl;
+        }
+
+        document.getElementById('mobile-menu-button').onclick = function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        };
+
+        showSection('hero');
+    </script>
+</body>
+</html>
