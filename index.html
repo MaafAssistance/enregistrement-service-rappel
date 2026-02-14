@@ -386,14 +386,6 @@
         };
 
         // FEDAPAY INTEGRATION FIX
-        function processToPayment() {
-            // Vérification si le SDK est chargé
-            if (typeof FedaPay === 'undefined' || !FedaPay.checkout) {
-                alert("Le service de paiement est encore en cours de chargement. Veuillez patienter un instant ou rafraîchir la page.");
-                return;
-            }
-
-            try {
                 FedaPay.init('#pay-button', {
             public_key: 'pk_live_NCxIYcDccM9djeDCt9e0wZ_K', // <--- REMPLACEZ PAR VOTRE CLÉ PK_SANDBOX FEDAPAY
                     transaction: {
